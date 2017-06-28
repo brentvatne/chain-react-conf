@@ -2,7 +2,6 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import scheduleByDay from '../data/scheduleByDay.json';
-
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import PurpleGradient from '../components/PurpleGradient';
@@ -17,35 +16,63 @@ export default class ScheduleScreen extends React.Component {
 
   state = {
     activeDay: 0,
+    shouldRenderDayTwo: false,
   };
 
   _setActiveDay = activeDay => {
-    this.setState({ activeDay });
+    let nextState = { activeDay };
+    if (activeDay === 1 && !this.state.shouldRenderDayTwo) {
+      nextState.shouldRenderDayTwo = true;
+    }
+
+    this.setState(nextState);
   };
 
   render() {
     const { isCurrentDay, activeDay } = this.state;
-    const data = scheduleByDay[activeDay];
 
     return (
-      <View style={styles.container}>
-        <PurpleGradient style={styles.linearGradient}>
-          <DayToggle activeDay={activeDay} onSelectDay={this._setActiveDay} />
-          {isCurrentDay && <View style={styles.timeline} />}
+      <PurpleGradient style={styles.container}>
+        <DayToggle activeDay={activeDay} onSelectDay={this._setActiveDay} />
 
-          {/* todo(brentvatne): this should not swap data but instead just hide/show, like tabs */}
-          <FlatList
-            ref={view => {
-              this._scheduleList = view;
-            }}
-            data={data}
-            renderItem={this._renderItem}
-            keyExtractor={(item, idx) => item.eventStart}
-            contentContainerStyle={styles.listContent}
-            showsVerticalScrollIndicator={false}
-          />
-        </PurpleGradient>
+        <View style={{ flex: 1 }}>
+          {this._maybeRenderListForDay(0)}
+          {this._maybeRenderListForDay(1)}
+        </View>
+      </PurpleGradient>
+    );
+  }
+
+  _maybeRenderListForDay = day => {
+    let { activeDay, shouldRenderDayTwo } = this.state;
+
+    if (day === 1 && !shouldRenderDayTwo) {
+      return null;
+    }
+
+    return (
+      <View
+        pointerEvents={activeDay === day ? 'auto' : 'none'}
+        style={[
+          StyleSheet.absoluteFill,
+          { opacity: activeDay === day ? 1 : 0 },
+        ]}>
+        <ScheduleDay events={scheduleByDay[day]} />
       </View>
+    );
+  };
+}
+
+class ScheduleDay extends React.PureComponent {
+  render() {
+    return (
+      <FlatList
+        data={this.props.events}
+        renderItem={this._renderItem}
+        keyExtractor={(item, idx) => item.eventStart}
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
+      />
     );
   }
 
@@ -76,7 +103,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingTop: Layout.baseMargin,
-    paddingBottom: Layout.baseMargin * 10,
+    paddingBottom: 20,
   },
   timeline: {
     width: 2,

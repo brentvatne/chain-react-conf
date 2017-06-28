@@ -11,7 +11,7 @@ import { format } from 'date-fns'
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 
-export default class Talk extends React.Component {
+export default class Talk extends React.PureComponent {
   render() {
     const { details } = this.props;
 

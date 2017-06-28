@@ -4,6 +4,13 @@ import { LinearGradient } from 'expo';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 
+const buttonHitSlop = {
+  top: 30,
+  left: 30,
+  right: 30,
+  bottom: 30,
+};
+
 export default class DayToggle extends React.Component {
   render() {
     const { activeDay, onSelectDay } = this.props;
@@ -18,10 +25,14 @@ export default class DayToggle extends React.Component {
         colors={['#46114E', '#521655', '#571757']}
         style={styles.headerGradient}>
         <View style={styles.dayToggle}>
-          <TouchableOpacity onPress={() => onSelectDay(0)}>
+          <TouchableOpacity
+            onPress={() => onSelectDay(0)}
+            hitSlop={buttonHitSlop}>
             <Text style={dayStyle(0)}>Monday</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => onSelectDay(1)}>
+          <TouchableOpacity
+            onPress={() => onSelectDay(1)}
+            hitSlop={buttonHitSlop}>
             <Text style={dayStyle(1)}>Tuesday</Text>
           </TouchableOpacity>
         </View>
