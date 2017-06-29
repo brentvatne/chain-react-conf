@@ -66,6 +66,7 @@ export default class DayToggle extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   headerGradient: {
     shadowOffset: {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   dayText: {
     backgroundColor: Colors.clear,
     fontFamily: 'Montserrat-Medium',
-    fontSize: 19,
+    fontSize: Layout.isSmallDevice ? 17 : 19,
     letterSpacing: 0,
   },
 });

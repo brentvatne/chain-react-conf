@@ -20,7 +20,7 @@ import Sponsors from '../components/Sponsors';
 
 export default class GeneralInfoScreen extends React.Component {
   static navigationOptions = {
-    title: 'General Info'
+    title: 'General Info',
   };
 
   state = {
@@ -52,16 +52,7 @@ export default class GeneralInfoScreen extends React.Component {
           </View>
         </Animated.ScrollView>
 
-        <Animated.View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            opacity: underlayOpacity,
-          }}>
-          <StatusBarUnderlay />
-        </Animated.View>
+        <StatusBarUnderlay animatedOpacity={underlayOpacity} />
       </PurpleGradient>
     );
   }

@@ -74,16 +74,7 @@ export default class LocationScreen extends React.Component {
           </View>
         </Animated.ScrollView>
 
-        <Animated.View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            opacity: underlayOpacity,
-          }}>
-          <StatusBarUnderlay />
-        </Animated.View>
+        <StatusBarUnderlay animatedOpacity={underlayOpacity} />
       </PurpleGradient>
     );
   }

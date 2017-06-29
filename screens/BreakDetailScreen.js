@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
+import { Animated, StyleSheet, View, Text, Image } from 'react-native';
 import { format, addMinutes } from 'date-fns';
 
 import FadeIn from 'react-native-fade-in-image';
@@ -12,14 +12,28 @@ import Images from '../constants/Images';
 import Layout from '../constants/Layout';
 
 export default class BreakDetailScreen extends React.Component {
-  static navigaitonOptions = {};
+  state = {
+    scrollY: new Animated.Value(0),
+  };
 
   render() {
     const { details } = this.props.navigation.state.params;
 
+    let underlayOpacity = this.state.scrollY.interpolate({
+      inputRange: [0, 50],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    });
+
+
     return (
       <PurpleGradient style={{ flex: 1 }}>
-        <ScrollView>
+        <Animated.ScrollView
+          scrollEventThrottle={1}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+            { useNativeDriver: true }
+          )}>
           <View style={styles.container}>
             <BackButton style={styles.backButton} />
 
@@ -38,9 +52,9 @@ export default class BreakDetailScreen extends React.Component {
               </View>
             </View>
           </View>
-        </ScrollView>
+        </Animated.ScrollView>
 
-        <StatusBarUnderlay />
+        <StatusBarUnderlay animatedOpacity={underlayOpacity} />
       </PurpleGradient>
     );
   }

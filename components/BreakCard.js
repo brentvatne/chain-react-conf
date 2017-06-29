@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: Layout.baseMargin,
     marginHorizontal: Layout.doubleBaseMargin,
-    backgroundColor: Colors.snow,
     height: Layout.breakHeight,
     borderRadius: 5,
   },
@@ -89,6 +88,7 @@ const styles = StyleSheet.create({
   background: {
     resizeMode: 'cover',
     borderRadius: 5,
+    backgroundColor: Colors.snow,
     ...StyleSheet.absoluteFillObject,
   },
   contentContainer: {

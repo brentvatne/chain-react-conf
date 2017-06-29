@@ -5,6 +5,8 @@ const { width, height } = Dimensions.get('window');
 const screenWidth = width < height ? width : height;
 const screenHeight = width < height ? height : width;
 
+const isSmallDevice = screenHeight <= 568;
+
 export default {
   window: {
     width,
@@ -21,9 +23,10 @@ export default {
   searchBarHeight: 30,
   screenWidth,
   screenHeight,
+  isSmallDevice,
   navBarHeight: Platform.OS === 'ios' ? 64 : 54,
   tabBarHeight: 54,
-  dayToggleHeight: 85,
+  dayToggleHeight: isSmallDevice ? 65 : 85,
   buttonRadius: 4,
   cardRadius: 5,
   locationBackgroundHeight: screenHeight * 0.485757121,

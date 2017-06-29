@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   Animated,
+  Platform,
   FlatList,
   StyleSheet,
   View,
@@ -50,7 +51,21 @@ export default class ScheduleScreen extends React.Component {
   }
 
   _handleChangeTab = index => {
+    if (Platform.OS === 'ios') {
+      this.setState({ index });
+    }
+
+    // note(brentvatne): ViewPager is broken (https://github.com/facebook/react-native/issues/14296),
+    // so we need to use TabViewPagerScroll, which uses ScrollView and has a small bug on Android
+    // this is a workaround
+    if (this._tabChangeTimer) {
+      return;
+    }
+
     this.setState({ index });
+    this._tabChangeTimer = setTimeout(() => {
+      this._tabChangeTimer = null;
+    }, 300);
   };
 
   _renderHeader = props => {
