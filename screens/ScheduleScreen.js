@@ -22,13 +22,14 @@ export default class ScheduleScreen extends React.Component {
 
   state = {
     activeDay: 0,
-    shouldRenderDayTwo: false,
+    daysToRender: [0],
   };
 
   _setActiveDay = activeDay => {
     let nextState = { activeDay };
-    if (activeDay === 1 && !this.state.shouldRenderDayTwo) {
-      nextState.shouldRenderDayTwo = true;
+    if (!this.state.daysToRender.includes(activeDay)) {
+      let daysToRender = [...this.state.daysToRender, activeDay];
+      nextState.daysToRender = daysToRender;
     }
 
     this.setState(nextState);
@@ -50,9 +51,9 @@ export default class ScheduleScreen extends React.Component {
   }
 
   _maybeRenderListForDay = day => {
-    let { activeDay, shouldRenderDayTwo } = this.state;
+    let { activeDay, daysToRender } = this.state;
 
-    if (day === 1 && !shouldRenderDayTwo) {
+    if (!daysToRender.includes(day)) {
       return null;
     }
 
