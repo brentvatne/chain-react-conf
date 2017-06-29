@@ -6,49 +6,47 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import Fonts from '../constants/Fonts';
 import Images from '../constants/Images';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 
+@withNavigation
 export default class BreakCard extends React.PureComponent {
   render() {
-    if (this.props.onPress) {
-      return (
-        <TouchableWithoutFeedback onPress={this.props.onPress}>
-          {this._renderContent()}
-        </TouchableWithoutFeedback>
-      );
-    } else {
-      return this._renderContent();
-    }
-  }
-
-  _renderContent() {
     const { details } = this.props;
     const containerStyles = [styles.container];
 
     return (
-      <View style={containerStyles}>
-        <Image
-          source={Images[`${details.type}Break`]}
-          style={[styles.background, { width: null, height: null }]}
-        />
-        <View style={styles.contentContainer}>
-          <View style={styles.content}>
-            <Text style={styles.heading}>
-              {details.title}
-            </Text>
-            <Text style={styles.duration}>
-              {details.timeframe}
-            </Text>
+      <TouchableWithoutFeedback onPress={this._handlePressCard}>
+        <View style={containerStyles}>
+          <Image
+            source={Images[`${details.type}Break`]}
+            style={[styles.background, { width: null, height: null }]}
+          />
+          <View style={styles.contentContainer}>
+            <View style={styles.content}>
+              <Text style={styles.heading}>
+                {details.title}
+              </Text>
+              <Text style={styles.duration}>
+                {details.timeframe}
+              </Text>
+            </View>
+            {this._renderSponsor()}
           </View>
-          {this._renderSponsor()}
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
+
+  _handlePressCard = () => {
+    this.props.navigation.navigate('BreakDetail', {
+      details: this.props.details,
+    });
+  };
 
   _renderSponsor() {
     const { details } = this.props;
