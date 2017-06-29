@@ -129,6 +129,8 @@ Images.forLocalCache = [
   Images.lunchBreak,
   Images.partyBreak,
   Images.arrowIcon,
+  Images.twitterIcon,
+  Images.githubIcon,
 ];
 
 export default Images;

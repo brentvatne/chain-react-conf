@@ -3840,6 +3840,10 @@ react-mixin@^3.0.5:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
 
+react-native-app-link@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-app-link/-/react-native-app-link-0.4.0.tgz#725ed2f0419c85bcdb83217ed0a00386016a76cb"
+
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
