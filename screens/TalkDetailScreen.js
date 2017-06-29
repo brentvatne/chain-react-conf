@@ -1,17 +1,10 @@
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Text,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Image, Text, View } from 'react-native';
 import SocialMediaButton from '../components/SocialMediaButton';
 
 import TalkFooter from '../components/TalkFooter';
+import BackButton from '../components/BackButton';
 import PurpleGradient from '../components/PurpleGradient';
-import Images from '../constants/Images';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 
@@ -22,13 +15,11 @@ export default class TalkDetailScreen extends React.Component {
     const { details } = this.props.navigation.state.params;
 
     return (
-      <PurpleGradient style={styles.linearGradient}>
+      <PurpleGradient style={{ flex: 1 }}>
         <ScrollView>
           <View style={styles.container}>
-            <TouchableOpacity style={styles.backButton} onPress={this._goBack}>
-              <Image style={styles.backButtonIcon} source={Images.arrowIcon} />
-              <Text style={styles.backButtonText}>Back</Text>
-            </TouchableOpacity>
+            <BackButton style={styles.backButton} />
+
             <View style={styles.cardShadow1} />
             <View style={styles.cardShadow2} />
             <Image style={styles.avatar} source={{ uri: details.avatarURL }} />
@@ -98,20 +89,10 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: -59,
-    left: -10,
+    top: -65,
+    left: -5,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  backButtonIcon: {
-    marginRight: 5,
-  },
-  backButtonText: {
-    fontFamily: 'Montserrat-Light',
-    fontSize: 17,
-    letterSpacing: 0,
-    backgroundColor: Colors.transparent,
-    color: 'rgba(255,255,255,0.80)',
   },
   cardShadow1: {
     flex: 1,

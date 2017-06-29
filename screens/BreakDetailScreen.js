@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import PurpleGradient from '../components/PurpleGradient';
-
+import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
 import { format, addMinutes } from 'date-fns';
+
+import PurpleGradient from '../components/PurpleGradient';
+import BackButton from '../components/BackButton';
 import Colors from '../constants/Colors';
 import Images from '../constants/Images';
 import Layout from '../constants/Layout';
@@ -24,10 +18,8 @@ export default class BreakDetailScreen extends React.Component {
       <PurpleGradient style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.container}>
-            <TouchableOpacity style={styles.backButton} onPress={this._goBack}>
-              <Image style={styles.backButtonIcon} source={Images.arrowIcon} />
-              <Text style={styles.backButtonText}>Back</Text>
-            </TouchableOpacity>
+            <BackButton style={styles.backButton} />
+
             <View style={styles.cardShadow1} />
             <View style={styles.cardShadow2} />
             <View style={styles.card} onLayout={this.onCardLayout}>
@@ -60,7 +52,11 @@ export default class BreakDetailScreen extends React.Component {
 
     return (
       <View style={styles.mainImageContainer}>
-        <Image style={styles.mainImage} source={mainImage} />
+        <Image
+          style={[styles.mainImage, { width: null, height: null }]}
+          source={mainImage}
+        />
+
         <View style={styles.mainHeadingContainer}>
           <Text style={styles.breakHeading}>
             {details.title}
@@ -104,34 +100,18 @@ export default class BreakDetailScreen extends React.Component {
       );
     }
   };
-
-  _goBack = () => {
-    this.props.navigation.goBack();
-  };
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 89,
+    marginTop: 101,
     marginBottom: Layout.doubleBaseMargin,
     marginHorizontal: Layout.doubleBaseMargin,
   },
   backButton: {
     position: 'absolute',
-    top: -59,
-    left: -10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  backButtonIcon: {
-    marginRight: 5,
-  },
-  backButtonText: {
-    fontFamily: 'Montserrat-Light',
-    fontSize: 17,
-    letterSpacing: 0,
-    backgroundColor: Colors.transparent,
-    color: 'rgba(255,255,255,0.80)',
+    top: -65,
+    left: -5,
   },
   cardShadow1: {
     flex: 1,
