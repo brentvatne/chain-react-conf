@@ -10,7 +10,7 @@ import { withNavigation } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
-import TalkInfo from '../components/TalkInfo';
+import TalkFooter from '../components/TalkFooter';
 
 @withNavigation
 export default class TalkCard extends React.PureComponent {
@@ -36,7 +36,7 @@ export default class TalkCard extends React.PureComponent {
                 source={{ uri: details.avatarURL }}
               />
             </View>
-            <TalkInfo details={details} />
+            <TalkFooter details={details} />
           </View>
         </TouchableWithoutFeedback>
       </View>

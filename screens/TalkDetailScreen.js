@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import SocialMediaButton from '../components/SocialMediaButton';
 
-import TalkInfo from '../components/TalkInfo';
+import TalkFooter from '../components/TalkFooter';
 import PurpleGradient from '../components/PurpleGradient';
 import Images from '../constants/Images';
 import Colors from '../constants/Colors';
@@ -43,7 +43,8 @@ export default class TalkDetailScreen extends React.Component {
               <Text style={styles.sectionHeading}>ABOUT</Text>
               {this._renderSpeakers()}
             </View>
-            <TalkInfo details={details} />
+
+            <TalkFooter details={details} />
           </View>
         </ScrollView>
       </PurpleGradient>

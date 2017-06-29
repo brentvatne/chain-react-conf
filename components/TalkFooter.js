@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
 import { format } from 'date-fns';
 
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
-import SocialMediaButton from '../components/SocialMediaButton';
 
-export default class TalkInfo extends React.PureComponent {
+export default class TalkFooter extends React.PureComponent {
   render() {
     const { details } = this.props;
     const formattedStart = format(details.eventStart, 'h:mmA');
@@ -28,25 +26,11 @@ export default class TalkInfo extends React.PureComponent {
             </Text>
           </View>
         </View>
+
         {this._maybeRenderRemindMeButton()}
-        {this._maybeRenderSocialMediaButtons()}
       </View>
     );
   }
-
-  _maybeRenderSocialMediaButtons = () => {
-    return null;
-
-    return (
-      <View style={styles.socialButtons}>
-        <SocialMediaButton
-          network="twitter"
-          onPress={this._handlePressTwitter}
-        />
-        <SocialMediaButton network="github" onPress={this._handlePressGithub} />
-      </View>
-    );
-  };
 
   _maybeRenderRemindMeButton = () => {
     return null;
