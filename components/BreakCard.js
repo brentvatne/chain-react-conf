@@ -27,17 +27,7 @@ export default class BreakCard extends React.PureComponent {
 
   _renderContent() {
     const { details } = this.props;
-
     const containerStyles = [styles.container];
-
-    const timeframe =
-      details.duration > 89
-        ? `${details.duration / 60} Hours`
-        : `${details.duration} Minutes`;
-
-    const title =
-      details.title ||
-      `${details.type.charAt(0).toUpperCase() + details.type.slice(1)} Break`;
 
     return (
       <View style={containerStyles}>
@@ -48,10 +38,10 @@ export default class BreakCard extends React.PureComponent {
         <View style={styles.contentContainer}>
           <View style={styles.content}>
             <Text style={styles.heading}>
-              {title}
+              {details.title}
             </Text>
             <Text style={styles.duration}>
-              {timeframe}
+              {details.timeframe}
             </Text>
           </View>
           {this._renderSponsor()}
