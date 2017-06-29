@@ -1,7 +1,5 @@
 import { Platform } from 'react-native';
 
-const tintColor = '#2f95dc';
-
 export default {
   background: '#1F0808',
   clear: 'rgba(0,0,0,0)',
@@ -23,6 +21,7 @@ export default {
   eggplant: '#251a34',
   border: '#483F53',
   banner: '#5F3E63',
+  purpleRipple: '#975B98',
 
   snow: 'white',
   red: '#E64044',
@@ -38,17 +37,4 @@ export default {
   text: '#000000',
   transparentBump:
     Platform.OS === 'ios' ? 'rgba(140,42,140, 0.5)' : 'rgba(140,42,140, 0.9)',
-
-  // Old
-
-  tintColor,
-  tabIconDefault: '#888',
-  tabIconSelected: tintColor,
-  tabBar: '#fefefe',
-  errorBackground: 'red',
-  errorText: '#fff',
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
-  noticeBackground: tintColor,
-  noticeText: '#fff',
 };

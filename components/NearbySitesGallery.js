@@ -7,6 +7,7 @@ import {
   StyleSheet,
   LayoutAnimation,
 } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
 
 import { Colors, Fonts, Images, Layout } from '../constants';
 import openExternalMapApp from '../utilities/openExternalMapApp';
@@ -16,7 +17,14 @@ const NearbySiteNames = Object.keys(NearbySites);
 export default class NearbySitesGallery extends React.PureComponent {
   state = {
     activeTab: NearbySiteNames[0],
+    shouldRenderTabs: false,
   };
+
+  componentWillMount() {
+    requestIdleCallback(() => {
+      this.setState({ shouldRenderTabs: true });
+    });
+  }
 
   // todo(brentvatne): improve perf of switching tabs here
   render() {
@@ -64,7 +72,8 @@ export default class NearbySitesGallery extends React.PureComponent {
     const { name, image, address } = data;
 
     return (
-      <TouchableOpacity
+      <Touchable
+        useForeground={Touchable.canUseNativeForeground()}
         key={name}
         style={styles.item}
         onPress={() => this._handlePress(address)}>
@@ -82,7 +91,7 @@ export default class NearbySitesGallery extends React.PureComponent {
             <Image source={Images.purpleArrowIcon} />
           </Text>
         </View>
-      </TouchableOpacity>
+      </Touchable>
     );
   };
 

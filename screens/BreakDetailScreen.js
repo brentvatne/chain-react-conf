@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
 import { format, addMinutes } from 'date-fns';
 
-import FadeIn from '@expo/react-native-fade-in-image';
+import FadeIn from 'react-native-fade-in-image';
 
 import PurpleGradient from '../components/PurpleGradient';
 import StatusBarUnderlay from '../components/StatusBarUnderlay';

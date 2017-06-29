@@ -12,12 +12,13 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@expo/react-native-fade-in-image": "^1.1.1",
     "date-fns": "^2.0.0-alpha.1",
     "expo": "18.0.6",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-18.0.1.tar.gz",
     "react-native-app-link": "^0.4.0",
+    "react-native-fade-in-image": "^1.0.0",
+    "react-native-platform-touchable": "1.0.2",
     "react-native-tab-view": "^0.0.66",
     "react-navigation": "^1.0.0-beta.11",
     "sentry-expo": "1.2.0-rc.0"

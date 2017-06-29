@@ -1,6 +1,8 @@
 import React from 'react';
 import { Animated, TouchableOpacity, StyleSheet, View } from 'react-native';
-import { LinearGradient } from 'expo';
+import { Constants, LinearGradient } from 'expo';
+import Touchable from 'react-native-platform-touchable';
+
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 
@@ -39,20 +41,26 @@ export default class DayToggle extends React.Component {
         colors={['#46114E', '#521655', '#571757']}
         style={styles.headerGradient}>
         <View style={styles.dayToggle}>
-          <TouchableOpacity
+          <Touchable
+            fallback={TouchableOpacity}
+            style={styles.dayToggleButton}
+            background={Touchable.Ripple(Colors.purpleRipple, false)}
             onPress={() => onSelectDay(0)}
             hitSlop={buttonHitSlop}>
             <Animated.Text style={[styles.dayText, dayOneStyle]}>
               Monday
             </Animated.Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Touchable>
+          <Touchable
+            style={styles.dayToggleButton}
+            fallback={TouchableOpacity}
+            background={Touchable.Ripple(Colors.purpleRipple, false)}
             onPress={() => onSelectDay(1)}
             hitSlop={buttonHitSlop}>
             <Animated.Text style={[styles.dayText, dayTwoStyle]}>
               Tuesday
             </Animated.Text>
-          </TouchableOpacity>
+          </Touchable>
         </View>
       </LinearGradient>
     );
@@ -73,16 +81,22 @@ const styles = StyleSheet.create({
   },
   dayToggle: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingTop: Layout.doubleBaseMargin,
+    paddingTop: Constants.statusBarHeight,
     height: Layout.dayToggleHeight,
+    width: Layout.window.width,
     backgroundColor: Colors.clear,
+  },
+  dayToggleButton: {
+    flex: 1,
+    flexGrow: 1,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   dayText: {
     backgroundColor: Colors.clear,
     fontFamily: 'Montserrat-Medium',
-    fontSize: 20,
+    fontSize: 19,
     letterSpacing: 0,
   },
 });

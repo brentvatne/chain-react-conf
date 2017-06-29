@@ -3,10 +3,12 @@ import {
   View,
   Text,
   Image,
+  Platform,
   TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import Touchable from 'react-native-platform-touchable';
 
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
@@ -19,27 +21,26 @@ export default class TalkCard extends React.PureComponent {
     const containerStyles = [styles.container];
 
     return (
-      <View>
-        <TouchableWithoutFeedback onPress={this._handlePressCard}>
-          <View style={containerStyles}>
-            <View style={styles.info}>
-              <View style={styles.infoText}>
-                <Text style={styles.name}>
-                  {details.speaker}
-                </Text>
-                <Text style={styles.title}>
-                  {details.title}
-                </Text>
-              </View>
-              <Image
-                style={styles.avatar}
-                source={{ uri: details.avatarURL }}
-              />
+      <Touchable
+        style={styles.touchable}
+        background={Touchable.Ripple('#ccc', false)}
+        fallback={TouchableWithoutFeedback}
+        onPress={this._handlePressCard}>
+        <View style={containerStyles}>
+          <View style={styles.info}>
+            <View style={styles.infoText}>
+              <Text style={styles.name}>
+                {details.speaker}
+              </Text>
+              <Text style={styles.title}>
+                {details.title}
+              </Text>
             </View>
-            <TalkFooter details={details} />
+            <Image style={styles.avatar} source={{ uri: details.avatarURL }} />
           </View>
-        </TouchableWithoutFeedback>
-      </View>
+          <TalkFooter details={details} />
+        </View>
+      </Touchable>
     );
   }
 
@@ -51,10 +52,25 @@ export default class TalkCard extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
+  touchable: {
+    ...Platform.select({
+      android: {
+        marginVertical: Layout.baseMargin,
+        marginHorizontal: Layout.doubleBaseMargin,
+        backgroundColor: Colors.snow,
+      },
+    }),
+  },
   container: {
     flex: 1,
-    marginVertical: Layout.baseMargin,
-    marginHorizontal: Layout.doubleBaseMargin,
+    ...Platform.select({
+      ios: {
+        borderRadius: 5,
+        marginVertical: Layout.baseMargin,
+        marginHorizontal: Layout.doubleBaseMargin,
+        backgroundColor: Colors.snow,
+      },
+    }),
   },
   currentDay: {
     marginLeft: 16,
@@ -82,7 +98,6 @@ const styles = StyleSheet.create({
     padding: Layout.doubleBaseMargin,
     borderTopLeftRadius: Layout.cardRadius,
     borderTopRightRadius: Layout.cardRadius,
-    backgroundColor: Colors.snow,
   },
   infoText: {
     flex: 1,

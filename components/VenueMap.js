@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { MapView } from 'expo';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,7 +19,41 @@ const Region = {
 };
 
 export default class VenueMap extends React.Component {
+  state = {
+    shouldRenderMap: false,
+  };
+
+  componentWillMount() {
+    this._mounted = true;
+
+    setTimeout(() => {
+      requestIdleCallback(() => {
+        this._mounted && this.setState({ shouldRenderMap: true });
+      });
+    }, 500);
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+  }
+
   render() {
+    if (!this.state.shouldRenderMap) {
+      return (
+        <View
+          style={[
+            this.props.style,
+            {
+              backgroundColor: '#eee',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          ]}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
     return (
       <View>
         <MapView
@@ -77,14 +111,6 @@ export default class VenueMap extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  map: {
-    // For Android :/
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
   mapCloseButton: {
     width: 30,
     height: 30,
