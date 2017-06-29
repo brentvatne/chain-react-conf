@@ -1,5 +1,12 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Animated,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 import scheduleByDay from '../data/scheduleByDay.json';
 import Colors from '../constants/Colors';
@@ -57,22 +64,56 @@ export default class ScheduleScreen extends React.Component {
           StyleSheet.absoluteFill,
           { opacity: activeDay === day ? 1 : 0 },
         ]}>
-        <ScheduleDay events={scheduleByDay[day]} />
+        <ScheduleDay events={scheduleByDay[day]} fadeInOnRender={day === 1} />
       </View>
     );
   };
 }
 
 class ScheduleDay extends React.PureComponent {
+  constructor(props) {
+    super();
+
+    this.state = {
+      visible: new Animated.Value(props.fadeInOnRender ? 0 : 1),
+      waitingToRender: !!props.fadeInOnRender,
+    };
+  }
+
+  componentWillMount() {
+    if (this.props.fadeInOnRender) {
+      requestAnimationFrame(() => {
+        this.setState({ waitingToRender: false }, () => {
+          Animated.timing(this.state.visible, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+          }).start();
+        });
+      });
+    }
+  }
+
   render() {
+    if (this.state.waitingToRender) {
+      return (
+        <View
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <ActivityIndicator color="#fff" />
+        </View>
+      );
+    }
+
     return (
-      <FlatList
-        data={this.props.events}
-        renderItem={this._renderItem}
-        keyExtractor={(item, idx) => item.eventStart}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
-      />
+      <Animated.View style={{ flex: 1, opacity: this.state.visible }}>
+        <FlatList
+          data={this.props.events}
+          renderItem={this._renderItem}
+          keyExtractor={(item, idx) => item.eventStart}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+        />
+      </Animated.View>
     );
   }
 

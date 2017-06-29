@@ -8,6 +8,7 @@ import Colors from './constants/Colors';
 
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 
+console.disableYellowBox = true;
 Text.defaultProps.allowFontScaling = false;
 
 export default class AppContainer extends React.Component {
