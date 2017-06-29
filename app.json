@@ -9,9 +9,6 @@
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/icons/app-icon.png",
-    "androidStatusBar": {
-      "backgroundColor": "#ffffff"
-    },
     "notification": {
       "icon": "./assets/icons/notification-icon.png",
       "color": "#000000"
