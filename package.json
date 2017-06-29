@@ -1,11 +1,12 @@
 {
   "name": "ChainReactConf",
   "version": "0.0.0",
-  "description": "Hello Expo!",
-  "author": null,
+  "description": "A fork of the Chain React Conference App, for fun!",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint .",
+    "prettier": "eslint . --fix"
   },
   "jest": {
     "preset": "jest-expo"
@@ -21,15 +22,8 @@
     "sentry-expo": "1.2.0-rc.0"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
     "eslint": "^4.1.1",
-    "eslint-config-prettier": "^2.2.0",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-flowtype": "^2.34.1",
-    "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-prettier": "^2.1.2",
-    "eslint-plugin-react": "^7.1.0",
-    "jest-expo": "~18.0.0",
-    "prettier": "^1.5.2"
+    "eslint-config-react-native-prettier": "1.0.0",
+    "jest-expo": "~18.0.0"
   }
 }

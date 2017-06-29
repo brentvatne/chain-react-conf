@@ -20,7 +20,7 @@ import Sponsors from '../components/Sponsors';
 
 export default class GeneralInfoScreen extends React.Component {
   static navigationOptions = {
-    title: 'General Info',
+    title: 'General Info'
   };
 
   state = {
@@ -108,7 +108,9 @@ export default class GeneralInfoScreen extends React.Component {
             <Text style={sponsorTextStyles}>Sponsors</Text>
           </TouchableOpacity>
         </View>
-        {activeTab === 'liveHelp' ? this._renderLiveHelp() : this._renderSponsors()}
+        {activeTab === 'liveHelp'
+          ? this._renderLiveHelp()
+          : this._renderSponsors()}
       </View>
     );
   };
