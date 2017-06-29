@@ -19,7 +19,7 @@ export default class BreakDetailScreen extends React.Component {
 
     return (
       <PurpleGradient style={{ flex: 1 }}>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView>
           <View style={styles.container}>
             <BackButton style={styles.backButton} />
 

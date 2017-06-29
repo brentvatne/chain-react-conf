@@ -66,13 +66,13 @@ export default class TalkDetailScreen extends React.Component {
             <SocialMediaButton
               network="twitter"
               spacing="right"
-              onPress={this._handlePressTwitter}
+              username={speaker.twitter}
             />}
           {speaker.github &&
             <SocialMediaButton
               network="github"
               spacing="right"
-              onPress={this._handlePressGithub}
+              username={speaker.github}
             />}
         </View>
       </View>
