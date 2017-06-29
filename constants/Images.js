@@ -124,6 +124,10 @@ Images.forLocalCache = [
   Images.inactiveLocationIcon,
   Images.inactiveNotificationIcon,
   Images.inactiveScheduleIcon,
+  Images.breakfastBreak,
+  Images.coffeeBreak,
+  Images.lunchBreak,
+  Images.partyBreak,
 ];
 
 export default Images;
