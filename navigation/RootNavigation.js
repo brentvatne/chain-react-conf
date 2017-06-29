@@ -1,10 +1,8 @@
-import { Notifications } from 'expo';
-import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 
-export default StackNavigator(
+const RootNavigation = StackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
@@ -18,3 +16,5 @@ export default StackNavigator(
     }),
   }
 );
+
+export default RootNavigation;

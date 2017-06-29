@@ -43,7 +43,7 @@ export default class BreakCard extends React.PureComponent {
       <View style={containerStyles}>
         <Image
           source={Images[`${details.type}Break`]}
-          style={[styles.background, {width: null, height: null}]}
+          style={[styles.background, { width: null, height: null }]}
         />
         <View style={styles.contentContainer}>
           <View style={styles.content}>

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { TabNavigator, TabBarBottom } from 'react-navigation';
+import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 import Images from '../constants/Images';
 import ScheduleScreen from '../screens/ScheduleScreen';
 import LocationScreen from '../screens/LocationScreen';
 import GeneralInfoScreen from '../screens/GeneralInfoScreen';
+import TalkDetailScreen from '../screens/TalkDetailScreen';
+import BreakDetailScreen from '../screens/BreakDetailScreen';
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -30,10 +32,23 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabNavigator(
+const ScheduleStack = StackNavigator(
+  {
+    Home: { screen: ScheduleScreen },
+    TalkDetail: { screen: TalkDetailScreen },
+    BreakDetail: { screen: BreakDetailScreen },
+  },
+  {
+    headerMode: 'none',
+    initialRouteName: 'Home',
+    cardStyle: styles.card,
+  }
+);
+
+const MainTabNavigator = TabNavigator(
   {
     Schedule: {
-      screen: ScheduleScreen,
+      screen: ScheduleStack,
     },
     Location: {
       screen: LocationScreen,
@@ -81,3 +96,5 @@ export default TabNavigator(
     },
   }
 );
+
+export default MainTabNavigator;

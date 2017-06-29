@@ -4,7 +4,6 @@ import {
   Animated,
   FlatList,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 
@@ -36,7 +35,7 @@ export default class ScheduleScreen extends React.Component {
   };
 
   render() {
-    const { isCurrentDay, activeDay } = this.state;
+    const { activeDay } = this.state;
 
     return (
       <PurpleGradient style={styles.container}>
@@ -109,7 +108,7 @@ class ScheduleDay extends React.PureComponent {
         <FlatList
           data={this.props.events}
           renderItem={this._renderItem}
-          keyExtractor={(item, idx) => item.eventStart}
+          keyExtractor={item => item.eventStart}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
         />

@@ -128,6 +128,7 @@ Images.forLocalCache = [
   Images.coffeeBreak,
   Images.lunchBreak,
   Images.partyBreak,
+  Images.arrowIcon,
 ];
 
 export default Images;
