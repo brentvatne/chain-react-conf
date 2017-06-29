@@ -5,6 +5,7 @@ import { format, addMinutes } from 'date-fns';
 import FadeIn from '@expo/react-native-fade-in-image';
 
 import PurpleGradient from '../components/PurpleGradient';
+import StatusBarUnderlay from '../components/StatusBarUnderlay';
 import BackButton from '../components/BackButton';
 import Colors from '../constants/Colors';
 import Images from '../constants/Images';
@@ -38,6 +39,8 @@ export default class BreakDetailScreen extends React.Component {
             </View>
           </View>
         </ScrollView>
+
+        <StatusBarUnderlay />
       </PurpleGradient>
     );
   }

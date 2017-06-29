@@ -5,6 +5,7 @@ import SocialMediaButton from '../components/SocialMediaButton';
 import TalkFooter from '../components/TalkFooter';
 import BackButton from '../components/BackButton';
 import PurpleGradient from '../components/PurpleGradient';
+import StatusBarUnderlay from '../components/StatusBarUnderlay';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 
@@ -38,6 +39,8 @@ export default class TalkDetailScreen extends React.Component {
             <TalkFooter details={details} />
           </View>
         </ScrollView>
+
+        <StatusBarUnderlay />
       </PurpleGradient>
     );
   }
