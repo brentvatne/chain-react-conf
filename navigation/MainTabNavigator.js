@@ -69,6 +69,7 @@ const MainTabNavigator = TabNavigator(
     headerMode: 'none',
     animationEnabled: false,
     swipeEnabled: false,
+    lazy: true,
     tabBarOptions: {
       activeTintColor: 'white',
       inactiveTintColor: 'white',
