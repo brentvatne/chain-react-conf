@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { TabViewAnimated, TabViewPagerScroll } from 'react-native-tab-view';
 
 import scheduleByDay from '../data/scheduleByDay.json';
 import Colors from '../constants/Colors';
@@ -21,51 +22,51 @@ export default class ScheduleScreen extends React.Component {
   };
 
   state = {
-    activeDay: 0,
-    daysToRender: [0],
-  };
-
-  _setActiveDay = activeDay => {
-    let nextState = { activeDay };
-    if (!this.state.daysToRender.includes(activeDay)) {
-      let daysToRender = [...this.state.daysToRender, activeDay];
-      nextState.daysToRender = daysToRender;
-    }
-
-    this.setState(nextState);
+    index: 0,
+    routes: [{ key: 'monday', day: 0 }, { key: 'tuesday', day: 1 }],
   };
 
   render() {
-    const { activeDay } = this.state;
-
     return (
       <PurpleGradient style={styles.container}>
-        <DayToggle activeDay={activeDay} onSelectDay={this._setActiveDay} />
-
-        <View style={{ flex: 1 }}>
-          {this._maybeRenderListForDay(0)}
-          {this._maybeRenderListForDay(1)}
-        </View>
+        <TabViewAnimated
+          style={{ flex: 1 }}
+          lazy={true}
+          renderPager={props => <TabViewPagerScroll {...props} />}
+          navigationState={this.state}
+          renderScene={this._renderPage}
+          renderHeader={this._renderHeader}
+          onRequestChangeTab={this._handleChangeTab}
+          initialLayout={{
+            width: Layout.window.width,
+            height:
+              Layout.window.height -
+              Layout.tabBarHeight -
+              Layout.dayToggleHeight,
+          }}
+        />
       </PurpleGradient>
     );
   }
 
-  _maybeRenderListForDay = day => {
-    let { activeDay, daysToRender } = this.state;
+  _handleChangeTab = index => {
+    this.setState({ index });
+  };
 
-    if (!daysToRender.includes(day)) {
-      return null;
-    }
+  _renderHeader = props => {
+    return (
+      <DayToggle
+        position={props.position}
+        onSelectDay={this._handleChangeTab}
+      />
+    );
+  };
+
+  _renderPage = ({ route }) => {
+    const { day } = route;
 
     return (
-      <View
-        pointerEvents={activeDay === day ? 'auto' : 'none'}
-        style={[
-          StyleSheet.absoluteFill,
-          { opacity: activeDay === day ? 1 : 0 },
-        ]}>
-        <ScheduleDay events={scheduleByDay[day]} fadeInOnRender={day === 1} />
-      </View>
+      <ScheduleDay events={scheduleByDay[day]} fadeInOnRender={day === 1} />
     );
   };
 }
@@ -99,13 +100,18 @@ class ScheduleDay extends React.PureComponent {
       return (
         <View
           style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color="#fff" size="large" />
         </View>
       );
     }
 
     return (
-      <Animated.View style={{ flex: 1, opacity: this.state.visible }}>
+      <Animated.View
+        style={{
+          flex: 1,
+          opacity: this.state.visible,
+          backgroundColor: 'transparent',
+        }}>
         <FlatList
           data={this.props.events}
           renderItem={this._renderItem}
@@ -129,6 +135,9 @@ class ScheduleDay extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  page: {
+    width: Layout.window.width,
   },
   row: {
     flex: 1,

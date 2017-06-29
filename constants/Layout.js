@@ -22,6 +22,8 @@ export default {
   screenWidth,
   screenHeight,
   navBarHeight: Platform.OS === 'ios' ? 64 : 54,
+  tabBarHeight: 54,
+  dayToggleHeight: 85,
   buttonRadius: 4,
   cardRadius: 5,
   locationBackgroundHeight: screenHeight * 0.485757121,

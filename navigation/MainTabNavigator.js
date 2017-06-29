@@ -2,15 +2,14 @@ import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
-import Colors from '../constants/Colors';
-import Images from '../constants/Images';
+import { Colors, Images, Layout } from '../constants';
 import ScheduleScreen from '../screens/ScheduleScreen';
 import LocationScreen from '../screens/LocationScreen';
 import GeneralInfoScreen from '../screens/GeneralInfoScreen';
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 54,
+    height: Layout.tabBarHeight,
     paddingTop: 5,
     paddingBottom: 1,
     paddingHorizontal: 28,

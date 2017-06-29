@@ -66,8 +66,9 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: Layout.baseMargin,
     marginHorizontal: Layout.doubleBaseMargin,
-    backgroundColor: Colors.transparent,
+    backgroundColor: Colors.snow,
     height: Layout.breakHeight,
+    borderRadius: 5,
   },
   currentDay: {
     marginLeft: 16,

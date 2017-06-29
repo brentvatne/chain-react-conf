@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Animated, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
@@ -13,9 +13,23 @@ const buttonHitSlop = {
 
 export default class DayToggle extends React.Component {
   render() {
-    const { activeDay, onSelectDay } = this.props;
-    const dayStyle = day =>
-      activeDay === day ? styles.activeDay : styles.inactiveDay;
+    const { position, onSelectDay } = this.props;
+
+    const dayOneStyle = {
+      color: position.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['rgba(255,255,255,1)', 'rgba(255,255,255,0.40)'],
+        extrapolate: 'clamp',
+      }),
+    };
+
+    const dayTwoStyle = {
+      color: position.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['rgba(255,255,255,0.60)', 'rgba(255,255,255,1)'],
+        extrapolate: 'clamp',
+      }),
+    };
 
     return (
       <LinearGradient
@@ -28,12 +42,16 @@ export default class DayToggle extends React.Component {
           <TouchableOpacity
             onPress={() => onSelectDay(0)}
             hitSlop={buttonHitSlop}>
-            <Text style={dayStyle(0)}>Monday</Text>
+            <Animated.Text style={[styles.dayText, dayOneStyle]}>
+              Monday
+            </Animated.Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onSelectDay(1)}
             hitSlop={buttonHitSlop}>
-            <Text style={dayStyle(1)}>Tuesday</Text>
+            <Animated.Text style={[styles.dayText, dayTwoStyle]}>
+              Tuesday
+            </Animated.Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -50,6 +68,7 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.8,
     elevation: 20,
+    zIndex: 0,
     backgroundColor: 'black',
   },
   dayToggle: {
@@ -57,21 +76,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingTop: Layout.doubleBaseMargin,
-    height: 85,
+    height: Layout.dayToggleHeight,
     backgroundColor: Colors.clear,
   },
-  inactiveDay: {
+  dayText: {
     backgroundColor: Colors.clear,
-    fontFamily: 'Montserrat-Light',
+    fontFamily: 'Montserrat-Medium',
     fontSize: 20,
-    color: 'rgba(255,255,255,0.80)',
-    letterSpacing: 0,
-  },
-  activeDay: {
-    backgroundColor: Colors.clear,
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: 20,
-    color: Colors.snow,
     letterSpacing: 0,
   },
 });
