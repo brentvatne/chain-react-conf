@@ -11,6 +11,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/react-native-fade-in-image": "^1.1.1",
     "date-fns": "^2.0.0-alpha.1",
     "expo": "18.0.6",
     "react": "16.0.0-alpha.12",

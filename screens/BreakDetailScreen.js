@@ -2,6 +2,8 @@ import React from 'react';
 import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
 import { format, addMinutes } from 'date-fns';
 
+import FadeIn from '@expo/react-native-fade-in-image';
+
 import PurpleGradient from '../components/PurpleGradient';
 import BackButton from '../components/BackButton';
 import Colors from '../constants/Colors';
@@ -52,10 +54,14 @@ export default class BreakDetailScreen extends React.Component {
 
     return (
       <View style={styles.mainImageContainer}>
-        <Image
-          style={[styles.mainImage, { width: null, height: null }]}
-          source={mainImage}
-        />
+        <FadeIn
+          placeholderStyle={{ backgroundColor: Colors.purple }}
+          style={StyleSheet.absoluteFill}>
+          <Image
+            source={mainImage}
+            style={[styles.mainImage, { width: null, height: null }]}
+          />
+        </FadeIn>
 
         <View style={styles.mainHeadingContainer}>
           <Text style={styles.breakHeading}>
