@@ -1,8 +1,10 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { TabNavigator, TabBarBottom } from 'react-navigation';
+import { TabNavigator } from 'react-navigation';
+import CustomTabBarBottom from './CustomTabBarBottom';
 
 import { Colors, Images, Layout } from '../constants';
+import NavigationEvents from '../utilities/NavigationEvents';
 import ScheduleScreen from '../screens/ScheduleScreen';
 import LocationScreen from '../screens/LocationScreen';
 import GeneralInfoScreen from '../screens/GeneralInfoScreen';
@@ -63,7 +65,7 @@ const MainTabNavigator = TabNavigator(
         return <Image source={iconImage} />;
       },
     }),
-    tabBarComponent: TabBarBottom,
+    tabBarComponent: CustomTabBarBottom,
     tabBarPosition: 'bottom',
     headerMode: 'none',
     animationEnabled: false,
@@ -74,6 +76,14 @@ const MainTabNavigator = TabNavigator(
       inactiveTintColor: 'white',
       style: styles.tabBar,
       labelStyle: styles.tabBarLabel,
+      onPressTab: (index, previousIndex, navigation, onComplete) => {
+        if (previousIndex === index) {
+          let route = navigation.state.routes[index];
+          NavigationEvents.emit('selectedTabPressed', route);
+        }
+
+        onComplete();
+      },
     },
   }
 );

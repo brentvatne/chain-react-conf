@@ -45,6 +45,15 @@ export default class LocationScreen extends React.Component {
       this._maybeCloseMap
     );
 
+    this._tabPressedListener = NavigationEvents.addListener(
+      'selectedTabPressed',
+      route => {
+        if (route.key === 'Location') {
+          this._scrollToTop();
+        }
+      }
+    );
+
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: e => {
@@ -56,6 +65,7 @@ export default class LocationScreen extends React.Component {
 
   componentWillUnmount() {
     this._navigationEventListener.remove();
+    this._tabPressedListener.remove();
   }
 
   render() {
@@ -90,6 +100,11 @@ export default class LocationScreen extends React.Component {
       </PurpleGradient>
     );
   }
+
+  _scrollToTop = () => {
+    this._maybeCloseMap();
+    this._scrollView && this._scrollView.getNode().scrollTo({ x: 0, y: 0 });
+  };
 
   _handleMapActionsFocus = () => {
     if (this._mostRecentScrollY < 200) {

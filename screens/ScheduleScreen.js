@@ -16,6 +16,7 @@ import PurpleGradient from '../components/PurpleGradient';
 import DayToggle from '../components/DayToggle';
 import TalkCard from '../components/TalkCard';
 import BreakCard from '../components/BreakCard';
+import NavigationEvents from '../utilities/NavigationEvents';
 
 export default class ScheduleScreen extends React.Component {
   static navigationOptions = {
@@ -25,6 +26,28 @@ export default class ScheduleScreen extends React.Component {
   state = {
     index: 0,
     routes: [{ key: 'monday', day: 0 }, { key: 'tuesday', day: 1 }],
+  };
+
+  _scheduleDayRef = {};
+
+  componentWillMount() {
+    this._tabPressedListener = NavigationEvents.addListener(
+      'selectedTabPressed',
+      route => {
+        if (route.key === 'Schedule') {
+          this._scrollToTop();
+        }
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this._tabPressedListener.remove();
+  }
+
+  _scrollToTop = () => {
+    let scheduleDay = this._scheduleDayRef[this.state.index];
+    scheduleDay && scheduleDay.scrollToTop();
   };
 
   render() {
@@ -81,7 +104,13 @@ export default class ScheduleScreen extends React.Component {
     const { day } = route;
 
     return (
-      <ScheduleDay events={scheduleByDay[day]} fadeInOnRender={day === 1} />
+      <ScheduleDay
+        ref={view => {
+          this._scheduleDayRef[day] = view;
+        }}
+        events={scheduleByDay[day]}
+        fadeInOnRender={day === 1}
+      />
     );
   };
 }
@@ -129,6 +158,9 @@ class ScheduleDay extends React.PureComponent {
         }}>
         <FlatList
           data={this.props.events}
+          ref={view => {
+            this._list = view;
+          }}
           renderItem={this._renderItem}
           keyExtractor={item => item.eventStart}
           contentContainerStyle={styles.listContent}
@@ -137,6 +169,10 @@ class ScheduleDay extends React.PureComponent {
       </Animated.View>
     );
   }
+
+  scrollToTop = () => {
+    this._list.scrollToOffset({ x: 0, y: 0 });
+  };
 
   _renderItem = ({ item }) => {
     if (item.type === 'talk') {

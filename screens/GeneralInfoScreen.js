@@ -15,6 +15,7 @@ import RoundedButton from '../components/RoundedButton';
 import PurpleGradient from '../components/PurpleGradient';
 import StatusBarUnderlay from '../components/StatusBarUnderlay';
 import Sponsors from '../components/Sponsors';
+import NavigationEvents from '../utilities/NavigationEvents';
 
 // import ConferenceAnnouncements from '../Components/ConferenceAnnouncements'
 
@@ -28,6 +29,21 @@ export default class GeneralInfoScreen extends React.Component {
     scrollY: new Animated.Value(0),
   };
 
+  componentWillMount() {
+    this._tabPressedListener = NavigationEvents.addListener(
+      'selectedTabPressed',
+      route => {
+        if (route.key === 'GeneralInfo') {
+          this._scrollToTop();
+        }
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this._tabPressedListener.remove();
+  }
+
   render() {
     let underlayOpacity = this.state.scrollY.interpolate({
       inputRange: [100, 250],
@@ -38,6 +54,9 @@ export default class GeneralInfoScreen extends React.Component {
     return (
       <PurpleGradient style={{ flex: 1 }}>
         <Animated.ScrollView
+          ref={view => {
+            this._scrollView = view;
+          }}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
             { useNativeDriver: true }
@@ -56,6 +75,10 @@ export default class GeneralInfoScreen extends React.Component {
       </PurpleGradient>
     );
   }
+
+  _scrollToTop = () => {
+    this._scrollView.getNode().scrollTo({ x: 0, y: 0 });
+  };
 
   _setActiveTab = tab => {
     LayoutAnimation.configureNext({
