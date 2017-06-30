@@ -131,6 +131,8 @@ Images.forLocalCache = [
   Images.arrowIcon,
   Images.twitterIcon,
   Images.githubIcon,
+  Images.slack,
+  Images.blowhorn,
 ];
 
 export default Images;
