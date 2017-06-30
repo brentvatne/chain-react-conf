@@ -2,11 +2,19 @@ import React from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import { AppLoading, KeepAwake } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
+
 import Images from './constants/Images';
 import RootNavigation from './navigation/RootNavigation';
 import Colors from './constants/Colors';
-
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+import NavigationEvents from './utilities/NavigationEvents';
+
+import Sentry from 'sentry-expo';
+if (!__DEV__) {
+  Sentry.config(
+    'https://23d7bdfb2fa44757a31487fe1769487a@sentry.io/185875'
+  ).install();
+}
 
 console.disableYellowBox = true;
 Text.defaultProps.allowFontScaling = false;
@@ -52,7 +60,12 @@ export default class AppContainer extends React.Component {
     if (this.state.appIsReady) {
       return (
         <View style={styles.container}>
-          <RootNavigation />
+          <RootNavigation
+            onNavigationStateChange={(prevState, currentState) => {
+              NavigationEvents.emit('change', { prevState, currentState });
+            }}
+          />
+
           <KeepAwake />
           <StatusBar barStyle="light-content" backgroundColor={Colors.purple} />
         </View>

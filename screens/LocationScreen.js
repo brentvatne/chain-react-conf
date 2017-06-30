@@ -1,7 +1,9 @@
 import React from 'react';
 import {
   Animated,
+  BackHandler,
   View,
+  Platform,
   Text,
   StyleSheet,
   PanResponder,
@@ -9,6 +11,7 @@ import {
 } from 'react-native';
 
 import { Colors, Fonts, Images, Layout } from '../constants';
+import NavigationEvents from '../utilities/NavigationEvents';
 import StatusBarUnderlay from '../components/StatusBarUnderlay';
 import NearbySitesGallery from '../components/NearbySitesGallery';
 import VenueMap from '../components/VenueMap';
@@ -37,6 +40,11 @@ export default class LocationScreen extends React.Component {
       this._mostRecentScrollY = value;
     });
 
+    this._navigationEventListener = NavigationEvents.addListener(
+      'change',
+      this._maybeCloseMap
+    );
+
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: e => {
@@ -44,6 +52,10 @@ export default class LocationScreen extends React.Component {
       },
       onPanResponderRelease: this._checkMapTap,
     });
+  }
+
+  componentWillUnmount() {
+    this._navigationEventListener.remove();
   }
 
   render() {
@@ -181,27 +193,45 @@ export default class LocationScreen extends React.Component {
       e.nativeEvent.timestamp - this.state.mapTouchStart <
       MAP_TAP_THRESHOLD
     ) {
-      LayoutAnimation.configureNext({
-        ...LayoutAnimation.Presets.linear,
-        duration: 250,
-      });
-
-      this._scrollView.getNode().scrollTo({
-        y: SCROLL_TARGET_FOR_MAP_FOCUS,
-        animated: true,
-      });
-      this.setState({ mapIsFocused: true });
+      this._focusMap();
     }
     this.setState({ mapTouchStart: '' });
   };
 
+  _focusMap = () => {
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('backPress', this._onCloseMap);
+    }
+
+    LayoutAnimation.configureNext({
+      ...LayoutAnimation.Presets.linear,
+      duration: 250,
+    });
+
+    this._scrollView.getNode().scrollTo({
+      y: SCROLL_TARGET_FOR_MAP_FOCUS,
+      animated: true,
+    });
+    this.setState({ mapIsFocused: true });
+  };
+
+  _maybeCloseMap = () => {
+    if (this.state.mapIsFocused) {
+      this._onCloseMap();
+    }
+  };
+
   _onCloseMap = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this._onCloseMap);
+
     LayoutAnimation.configureNext({
       ...LayoutAnimation.Presets.linear,
       duration: 150,
     });
 
     this.setState({ mapIsFocused: false });
+
+    return true;
   };
 }
 
