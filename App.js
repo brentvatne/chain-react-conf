@@ -10,7 +10,7 @@ import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 import NavigationEvents from './utilities/NavigationEvents';
 
 import Sentry from 'sentry-expo';
-if (!__DEV__) {
+if (!__DEV__ && Constants.manifest.id === '@community/ChainReactConf') {
   Sentry.config(
     'https://23d7bdfb2fa44757a31487fe1769487a@sentry.io/185875'
   ).install();
