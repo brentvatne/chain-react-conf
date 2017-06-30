@@ -3,6 +3,8 @@
 import React, { PureComponent } from 'react';
 import { Animated, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import TabBarIcon from 'react-navigation/src/views/TabView/TabBarIcon';
+import Touchable from 'react-native-platform-touchable';
+import { Colors } from '../constants';
 
 import type {
   NavigationAction,
@@ -167,7 +169,10 @@ export default class TabBarBottom extends PureComponent<
           });
           const justifyContent = this.props.showIcon ? 'flex-end' : 'center';
           return (
-            <TouchableWithoutFeedback
+            <Touchable
+              fallback={TouchableWithoutFeedback}
+              background={Touchable.Ripple(Colors.purpleRipple, true)}
+              style={styles.tab}
               key={route.key}
               onPress={() => this._handlePress(index)}>
               <Animated.View
@@ -179,7 +184,7 @@ export default class TabBarBottom extends PureComponent<
                 {this._renderIcon(scene)}
                 {this._renderLabel(scene)}
               </Animated.View>
-            </TouchableWithoutFeedback>
+            </Touchable>
           );
         })}
       </Animated.View>
