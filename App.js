@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import { AppLoading, Constants, KeepAwake } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
+import Sentry from 'sentry-expo';
 
 import Images from './constants/Images';
 import RootNavigation from './navigation/RootNavigation';
@@ -9,12 +10,9 @@ import Colors from './constants/Colors';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 import NavigationEvents from './utilities/NavigationEvents';
 
-import Sentry from 'sentry-expo';
-if (!__DEV__ && Constants.manifest.id === '@community/ChainReactConf') {
-  Sentry.config(
-    'https://23d7bdfb2fa44757a31487fe1769487a@sentry.io/185875'
-  ).install();
-}
+Sentry.config(
+  'https://23d7bdfb2fa44757a31487fe1769487a@sentry.io/185875'
+).install();
 
 console.disableYellowBox = true;
 Text.defaultProps.allowFontScaling = false;

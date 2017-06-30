@@ -22,7 +22,7 @@
     "react-native-platform-touchable": "1.0.2",
     "react-native-tab-view": "^0.0.66",
     "react-navigation": "^1.0.0-beta.11",
-    "sentry-expo": "1.2.0-rc.0"
+    "sentry-expo": "1.2.0"
   },
   "devDependencies": {
     "eslint": "^4.1.1",
