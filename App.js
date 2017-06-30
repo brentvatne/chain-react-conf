@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
-import { AppLoading, KeepAwake } from 'expo';
+import { AppLoading, Constants, KeepAwake } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 
 import Images from './constants/Images';
