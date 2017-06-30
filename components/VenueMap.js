@@ -1,5 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { MapView } from 'expo';
 import Icon from 'react-native-vector-icons/FontAwesome';
 

@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import FadeIn from 'react-native-fade-in-image';
 
 import Fonts from '../constants/Fonts';
 import Images from '../constants/Images';
@@ -22,10 +23,14 @@ export default class BreakCard extends React.PureComponent {
     return (
       <TouchableWithoutFeedback onPress={this._handlePressCard}>
         <View style={containerStyles}>
-          <Image
-            source={Images[`${details.type}Break`]}
-            style={[styles.background, { width: null, height: null }]}
-          />
+          <FadeIn
+            placeholderStyle={{ backgroundColor: Colors.purple }}
+            style={StyleSheet.absoluteFill}>
+            <Image
+              source={Images[`${details.type}Break`]}
+              style={[styles.background, { width: null, height: null }]}
+            />
+          </FadeIn>
           <View style={styles.contentContainer}>
             <View style={styles.content}>
               <Text style={styles.heading}>
@@ -88,7 +93,6 @@ const styles = StyleSheet.create({
   background: {
     resizeMode: 'cover',
     borderRadius: 5,
-    backgroundColor: Colors.snow,
     ...StyleSheet.absoluteFillObject,
   },
   contentContainer: {

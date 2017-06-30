@@ -1,8 +1,7 @@
 import React from 'react';
 import { Animated, StyleSheet, View, Text, Image } from 'react-native';
-import { format, addMinutes } from 'date-fns';
-
 import FadeIn from 'react-native-fade-in-image';
+import { format, addMinutes } from 'date-fns';
 
 import PurpleGradient from '../components/PurpleGradient';
 import StatusBarUnderlay from '../components/StatusBarUnderlay';
@@ -24,7 +23,6 @@ export default class BreakDetailScreen extends React.Component {
       outputRange: [0, 1],
       extrapolate: 'clamp',
     });
-
 
     return (
       <PurpleGradient style={{ flex: 1 }}>

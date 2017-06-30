@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Touchable from 'react-native-platform-touchable';
+import FadeIn from 'react-native-fade-in-image';
 
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
@@ -36,7 +37,12 @@ export default class TalkCard extends React.PureComponent {
                 {details.title}
               </Text>
             </View>
-            <Image style={styles.avatar} source={{ uri: details.avatarURL }} />
+            <FadeIn>
+              <Image
+                style={styles.avatar}
+                source={{ uri: details.avatarURL }}
+              />
+            </FadeIn>
           </View>
           <TalkFooter details={details} />
         </View>

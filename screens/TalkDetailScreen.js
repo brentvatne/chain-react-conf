@@ -1,9 +1,17 @@
 import React from 'react';
-import { Animated, StyleSheet, Image, Text, View } from 'react-native';
-import SocialMediaButton from '../components/SocialMediaButton';
+import {
+  Animated,
+  StyleSheet,
+  Platform,
+  Image,
+  Text,
+  View,
+} from 'react-native';
+import FadeIn from 'react-native-fade-in-image';
 
-import TalkFooter from '../components/TalkFooter';
 import BackButton from '../components/BackButton';
+import SocialMediaButton from '../components/SocialMediaButton';
+import TalkFooter from '../components/TalkFooter';
 import PurpleGradient from '../components/PurpleGradient';
 import StatusBarUnderlay from '../components/StatusBarUnderlay';
 import Colors from '../constants/Colors';
@@ -36,7 +44,7 @@ export default class TalkDetailScreen extends React.Component {
 
             <View style={styles.cardShadow1} />
             <View style={styles.cardShadow2} />
-            <Image style={styles.avatar} source={{ uri: details.avatarURL }} />
+            {this._renderAvatar()}
             <View style={styles.card}>
               <Text style={styles.sectionHeading}>TALK</Text>
               <Text style={styles.heading}>
@@ -56,6 +64,23 @@ export default class TalkDetailScreen extends React.Component {
         <StatusBarUnderlay animatedOpacity={underlayOpacity} />
       </PurpleGradient>
     );
+  }
+
+  _renderAvatar() {
+    const { details } = this.props.navigation.state.params;
+
+    const image = (
+      <Image style={styles.avatar} source={{ uri: details.avatarURL }} />
+    );
+    if (Platform.OS === 'ios') {
+      return (
+        <FadeIn style={styles.avatarFadeContainer}>
+          {image}
+        </FadeIn>
+      );
+    } else {
+      return image;
+    }
   }
 
   _renderSpeakers = () => {
@@ -133,8 +158,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: Layout.cardRadius,
     backgroundColor: Colors.snow,
   },
+  avatarFadeContainer: {
+    zIndex: 4,
+  },
   avatar: {
     position: 'absolute',
+    zIndex: 4,
     top: -43,
     left: (Layout.screenWidth - Layout.doubleBaseMargin * 2) / 2 - 53,
     height: 106,
@@ -142,7 +171,6 @@ const styles = StyleSheet.create({
     borderRadius: 53,
     borderColor: Colors.snow,
     borderWidth: 1,
-    zIndex: 4,
   },
   sectionHeading: {
     alignSelf: 'flex-start',
