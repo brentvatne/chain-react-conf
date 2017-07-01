@@ -12,12 +12,11 @@ import FadeIn from 'react-native-fade-in-image';
 import BackButton from '../components/BackButton';
 import SocialMediaButton from '../components/SocialMediaButton';
 import TalkFooter from '../components/TalkFooter';
-import PurpleGradient from '../components/PurpleGradient';
 import StatusBarUnderlay from '../components/StatusBarUnderlay';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 
-export default class TalkDetailScreen extends React.Component {
+export default class TalkDetailScreen extends React.PureComponent {
   state = {
     scrollY: new Animated.Value(0),
   };
@@ -32,7 +31,7 @@ export default class TalkDetailScreen extends React.Component {
     });
 
     return (
-      <PurpleGradient style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <Animated.ScrollView
           scrollEventThrottle={1}
           onScroll={Animated.event(
@@ -62,7 +61,7 @@ export default class TalkDetailScreen extends React.Component {
         </Animated.ScrollView>
 
         <StatusBarUnderlay animatedOpacity={underlayOpacity} />
-      </PurpleGradient>
+      </View>
     );
   }
 

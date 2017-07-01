@@ -3,14 +3,13 @@ import { Animated, StyleSheet, View, Text, Image } from 'react-native';
 import FadeIn from 'react-native-fade-in-image';
 import { format, addMinutes } from 'date-fns';
 
-import PurpleGradient from '../components/PurpleGradient';
 import StatusBarUnderlay from '../components/StatusBarUnderlay';
 import BackButton from '../components/BackButton';
 import Colors from '../constants/Colors';
 import Images from '../constants/Images';
 import Layout from '../constants/Layout';
 
-export default class BreakDetailScreen extends React.Component {
+export default class BreakDetailScreen extends React.PureComponent {
   state = {
     scrollY: new Animated.Value(0),
   };
@@ -25,7 +24,7 @@ export default class BreakDetailScreen extends React.Component {
     });
 
     return (
-      <PurpleGradient style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <Animated.ScrollView
           scrollEventThrottle={1}
           onScroll={Animated.event(
@@ -53,7 +52,7 @@ export default class BreakDetailScreen extends React.Component {
         </Animated.ScrollView>
 
         <StatusBarUnderlay animatedOpacity={underlayOpacity} />
-      </PurpleGradient>
+      </View>
     );
   }
 

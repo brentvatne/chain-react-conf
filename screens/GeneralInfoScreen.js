@@ -46,7 +46,7 @@ export default class GeneralInfoScreen extends React.Component {
 
   render() {
     let underlayOpacity = this.state.scrollY.interpolate({
-      inputRange: [100, 250],
+      inputRange: [30, 100],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     });

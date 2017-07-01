@@ -133,6 +133,7 @@ Images.forLocalCache = [
   Images.githubIcon,
   Images.slack,
   Images.blowhorn,
+  Images.theArmory,
 ];
 
 export default Images;
