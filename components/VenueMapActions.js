@@ -59,12 +59,12 @@ export default class VenueMapActions extends React.PureComponent {
           this.state.showRideOptions && { height: 170 },
         ]}>
         <Touchable
-          useForeground={Touchable.canUseNativeForeground()}
+          foreground={Touchable.Ripple('#ccc', false)}
           onPress={this._openLyftAsync}>
           <Image style={styles.rideButton} source={Images.lyftButton} />
         </Touchable>
         <Touchable
-          useForeground={Touchable.canUseNativeForeground()}
+          foreground={Touchable.Ripple('#ccc', false)}
           onPress={this._openUberAsync}>
           <Image style={styles.rideButton} source={Images.uberButton} />
         </Touchable>

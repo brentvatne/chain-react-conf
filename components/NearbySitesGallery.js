@@ -79,29 +79,31 @@ export default class NearbySitesGallery extends React.PureComponent {
 
     return (
       <Touchable
-        useForeground={Touchable.canUseNativeForeground()}
+        foreground={Touchable.Ripple('#ccc', false)}
         key={name}
         style={styles.item}
         onPress={() => this._handlePress(address)}>
-        <FadeIn placeholderStyle={{ backgroundColor: '#eee' }}>
-          <Image
-            source={Images[image]}
-            resizeMode={'cover'}
-            style={[styles.itemImage, { height: 100 }]}
-          />
-        </FadeIn>
-        <View style={styles.itemDetail}>
-          <Text style={styles.itemTitle}>
-            {name}
-          </Text>
-          <Text style={styles.itemAction}>
-            Directions&nbsp;
-            <Ionicons
-              name="md-arrow-forward"
-              size={10}
-              style={{ color: Colors.darkPurple, marginBottom: -2 }}
+        <View>
+          <FadeIn placeholderStyle={{ backgroundColor: '#eee' }}>
+            <Image
+              source={Images[image]}
+              resizeMode={'cover'}
+              style={[styles.itemImage, { height: 100 }]}
             />
-          </Text>
+          </FadeIn>
+          <View style={styles.itemDetail}>
+            <Text style={styles.itemTitle}>
+              {name}
+            </Text>
+            <Text style={styles.itemAction}>
+              Directions&nbsp;
+              <Ionicons
+                name="md-arrow-forward"
+                size={10}
+                style={{ color: Colors.darkPurple, marginBottom: -2 }}
+              />
+            </Text>
+          </View>
         </View>
       </Touchable>
     );

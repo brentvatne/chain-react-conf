@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import FadeIn from 'react-native-fade-in-image';
+import Touchable from 'react-native-platform-touchable';
 
 import Fonts from '../constants/Fonts';
 import Images from '../constants/Images';
@@ -21,29 +22,36 @@ export default class BreakCard extends React.PureComponent {
     const containerStyles = [styles.container];
 
     return (
-      <TouchableWithoutFeedback onPress={this._handlePressCard}>
-        <View style={containerStyles}>
-          <FadeIn
-            placeholderStyle={{ backgroundColor: Colors.purple }}
-            style={StyleSheet.absoluteFill}>
-            <Image
-              source={Images[`${details.type}Break`]}
-              style={[styles.background, { width: null, height: null }]}
-            />
-          </FadeIn>
-          <View style={styles.contentContainer}>
-            <View style={styles.content}>
-              <Text style={styles.heading}>
-                {details.title}
-              </Text>
-              <Text style={styles.duration}>
-                {details.timeframe}
-              </Text>
+      <View style={containerStyles}>
+        <Touchable
+          foreground={Touchable.Ripple('#dadada', true)}
+          fallback={TouchableWithoutFeedback}
+          onPress={this._handlePressCard}>
+          <View>
+            <FadeIn
+              placeholderStyle={{ backgroundColor: Colors.purple }}
+              style={StyleSheet.absoluteFill}>
+              <Image
+                source={Images[`${details.type}Break`]}
+                style={[styles.background, { width: null, height: null }]}
+              />
+            </FadeIn>
+            <View style={styles.cardContentContainer}>
+              <View style={styles.contentContainer}>
+                <View style={styles.content}>
+                  <Text style={styles.heading}>
+                    {details.title}
+                  </Text>
+                  <Text style={styles.duration}>
+                    {details.timeframe}
+                  </Text>
+                </View>
+                {this._renderSponsor()}
+              </View>
             </View>
-            {this._renderSponsor()}
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </Touchable>
+      </View>
     );
   }
 
@@ -71,8 +79,10 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: Layout.baseMargin,
     marginHorizontal: Layout.doubleBaseMargin,
-    height: Layout.breakHeight,
     borderRadius: 5,
+  },
+  cardContentContainer: {
+    height: Layout.breakHeight,
   },
   currentDay: {
     marginLeft: 16,
