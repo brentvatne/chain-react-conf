@@ -174,6 +174,7 @@ export default class TabBarBottom extends PureComponent<
               background={Touchable.Ripple(Colors.purpleRipple, true)}
               style={styles.tab}
               key={route.key}
+              onLongPress={() => this._handlePress(index)}
               onPress={() => this._handlePress(index)}>
               <Animated.View
                 style={[
