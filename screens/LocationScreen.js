@@ -31,6 +31,7 @@ export default class LocationScreen extends React.Component {
     scrollY: new Animated.Value(0),
     mapTouchStart: '',
     mapIsFocused: false,
+    mapActionsAreFocused: false,
   };
 
   _mostRecentScrollY = 0;
@@ -40,10 +41,19 @@ export default class LocationScreen extends React.Component {
       this._mostRecentScrollY = value;
     });
 
-    this._navigationEventListener = NavigationEvents.addListener(
-      'change',
-      this._maybeCloseMap
-    );
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('backPress', this._handleBackButtonPress);
+
+      // It feels better if we close the map and actions on Android when we
+      // switch tabs, and also makes handling back button easier
+      this._navigationEventListener = NavigationEvents.addListener(
+        'change',
+        () => {
+          this._maybeCloseMap();
+          this._maybeCloseMapActions();
+        }
+      );
+    }
 
     this._tabPressedListener = NavigationEvents.addListener(
       'selectedTabPressed',
@@ -64,8 +74,12 @@ export default class LocationScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    this._navigationEventListener.remove();
+    this._navigationEventListener && this._navigationEventListener.remove();
     this._tabPressedListener.remove();
+    BackHandler.removeEventListener(
+      'hardwareBackPress',
+      this._handleBackButtonPress
+    );
   }
 
   render() {
@@ -91,7 +105,12 @@ export default class LocationScreen extends React.Component {
             {this._renderBackground()}
             {this._renderHeader()}
             {this._renderMap()}
-            <VenueMapActions onFocus={this._handleMapActionsFocus} />
+            <VenueMapActions
+              ref={view => {
+                this._mapActions = view;
+              }}
+              onFocus={this._handleMapActionsFocus}
+            />
             {this._renderNearbySites()}
           </View>
         </Animated.ScrollView>
@@ -100,17 +119,6 @@ export default class LocationScreen extends React.Component {
       </PurpleGradient>
     );
   }
-
-  _scrollToTop = () => {
-    this._maybeCloseMap();
-    this._scrollView && this._scrollView.getNode().scrollTo({ x: 0, y: 0 });
-  };
-
-  _handleMapActionsFocus = () => {
-    if (this._mostRecentScrollY < 200) {
-      this._scrollView.getNode().scrollTo({ x: 0, y: 250, animated: true });
-    }
-  };
 
   _renderBackground = () => {
     const height = Layout.locationBackgroundHeight;
@@ -203,6 +211,18 @@ export default class LocationScreen extends React.Component {
     );
   }
 
+  _scrollToTop = () => {
+    this._maybeCloseMap();
+    this._maybeCloseMapActions();
+    this._scrollView && this._scrollView.getNode().scrollTo({ x: 0, y: 0 });
+  };
+
+  _handleMapActionsFocus = () => {
+    if (this._mostRecentScrollY < 200) {
+      this._scrollView.getNode().scrollTo({ x: 0, y: 250, animated: true });
+    }
+  };
+
   _checkMapTap = e => {
     if (
       e.nativeEvent.timestamp - this.state.mapTouchStart <
@@ -214,10 +234,6 @@ export default class LocationScreen extends React.Component {
   };
 
   _focusMap = () => {
-    if (Platform.OS === 'android') {
-      BackHandler.addEventListener('backPress', this._onCloseMap);
-    }
-
     LayoutAnimation.configureNext({
       ...LayoutAnimation.Presets.linear,
       duration: 250,
@@ -230,15 +246,23 @@ export default class LocationScreen extends React.Component {
     this.setState({ mapIsFocused: true });
   };
 
+  _handleBackButtonPress = () => {
+    return this._maybeCloseMap() || this._maybeCloseMapActions();
+  };
+
   _maybeCloseMap = () => {
     if (this.state.mapIsFocused) {
-      this._onCloseMap();
+      return this._onCloseMap();
+    } else {
+      return false;
     }
   };
 
-  _onCloseMap = () => {
-    BackHandler.removeEventListener('hardwareBackPress', this._onCloseMap);
+  _maybeCloseMapActions = () => {
+    return this._mapActions && this._mapActions.maybeClose();
+  };
 
+  _onCloseMap = () => {
     LayoutAnimation.configureNext({
       ...LayoutAnimation.Presets.linear,
       duration: 150,

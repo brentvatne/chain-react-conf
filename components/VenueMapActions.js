@@ -29,11 +29,20 @@ export default class VenueMapActions extends React.PureComponent {
     );
   }
 
+  maybeClose = () => {
+    if (this.state.showRideOptions) {
+      this._toggleRides();
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   _renderRideShareButton() {
     return (
       <View>
         <Touchable
-          background={Touchable.Ripple('#ccc', false)}
+          background={Touchable.Ripple('#ccc')}
           onPress={this._toggleRides}>
           <View style={styles.getRide}>
             <Text style={styles.getRideLabel}>Taking an Uber or Lyft?</Text>
