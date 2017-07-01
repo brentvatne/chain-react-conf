@@ -73,6 +73,16 @@ export default class ScheduleScreen extends React.Component {
     );
   }
 
+  _handlePressTab = index => {
+    // Scroll to the top if you double tap it
+    if (this.state.index === index) {
+      this._scrollToTop();
+      return;
+    }
+
+    this._handleChangeTab(index);
+  };
+
   _handleChangeTab = index => {
     if (Platform.OS === 'ios') {
       this.setState({ index });
@@ -93,10 +103,7 @@ export default class ScheduleScreen extends React.Component {
 
   _renderHeader = props => {
     return (
-      <DayToggle
-        position={props.position}
-        onSelectDay={this._handleChangeTab}
-      />
+      <DayToggle position={props.position} onPressDay={this._handlePressTab} />
     );
   };
 

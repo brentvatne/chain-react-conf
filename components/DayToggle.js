@@ -15,7 +15,7 @@ const buttonHitSlop = {
 
 export default class DayToggle extends React.Component {
   render() {
-    const { position, onSelectDay } = this.props;
+    const { position, onPressDay } = this.props;
 
     const dayOneStyle = {
       color: position.interpolate({
@@ -45,7 +45,7 @@ export default class DayToggle extends React.Component {
             fallback={TouchableOpacity}
             style={styles.dayToggleButton}
             background={Touchable.Ripple(Colors.purpleRipple, false)}
-            onPress={() => onSelectDay(0)}
+            onPress={() => onPressDay(0)}
             hitSlop={buttonHitSlop}>
             <Animated.Text style={[styles.dayText, dayOneStyle]}>
               Monday
@@ -55,7 +55,7 @@ export default class DayToggle extends React.Component {
             style={styles.dayToggleButton}
             fallback={TouchableOpacity}
             background={Touchable.Ripple(Colors.purpleRipple, false)}
-            onPress={() => onSelectDay(1)}
+            onPress={() => onPressDay(1)}
             hitSlop={buttonHitSlop}>
             <Animated.Text style={[styles.dayText, dayTwoStyle]}>
               Tuesday
