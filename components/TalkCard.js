@@ -59,6 +59,7 @@ export default class TalkCard extends React.PureComponent {
 
 const styles = StyleSheet.create({
   touchable: {
+    borderRadius: 5,
     ...Platform.select({
       android: {
         marginVertical: Layout.baseMargin,
