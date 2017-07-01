@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
-import { AppLoading, Constants, KeepAwake } from 'expo';
-import { FontAwesome } from '@expo/vector-icons';
+import { AppLoading, KeepAwake } from 'expo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Sentry from 'sentry-expo';
 
 import Images from './constants/Images';
@@ -31,7 +31,7 @@ export default class AppContainer extends React.Component {
       await cacheAssetsAsync({
         images: Images.forLocalCache,
         fonts: [
-          FontAwesome.font,
+          Ionicons.font,
           { 'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf') },
           {
             'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),

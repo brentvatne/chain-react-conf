@@ -1,6 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet } from 'react-native';
 import { maybeOpenURL } from 'react-native-app-link';
+import Touchable from 'react-native-platform-touchable';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Colors, Images, Layout } from '../constants';
 import openExternalMapApp from '../utilities/openExternalMapApp';
@@ -30,18 +32,21 @@ export default class VenueMapActions extends React.PureComponent {
   _renderRideShareButton() {
     return (
       <View>
-        <TouchableOpacity onPress={this._toggleRides}>
+        <Touchable
+          background={Touchable.Ripple('#ccc', false)}
+          onPress={this._toggleRides}>
           <View style={styles.getRide}>
             <Text style={styles.getRideLabel}>Taking an Uber or Lyft?</Text>
-            <Image
+            <Ionicons
+              name="ios-arrow-down"
+              size={35}
               style={[
                 styles.getRideIcon,
                 this.state.showRideOptions && styles.flip,
               ]}
-              source={Images.chevronIcon}
             />
           </View>
-        </TouchableOpacity>
+        </Touchable>
       </View>
     );
   }
@@ -53,12 +58,16 @@ export default class VenueMapActions extends React.PureComponent {
           styles.rideOptions,
           this.state.showRideOptions && { height: 170 },
         ]}>
-        <TouchableOpacity onPress={this._openLyftAsync}>
+        <Touchable
+          useForeground={Touchable.canUseNativeForeground()}
+          onPress={this._openLyftAsync}>
           <Image style={styles.rideButton} source={Images.lyftButton} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._openUberAsync}>
+        </Touchable>
+        <Touchable
+          useForeground={Touchable.canUseNativeForeground()}
+          onPress={this._openUberAsync}>
           <Image style={styles.rideButton} source={Images.uberButton} />
-        </TouchableOpacity>
+        </Touchable>
       </View>
     );
   }
@@ -103,7 +112,9 @@ export default class VenueMapActions extends React.PureComponent {
 class DirectionsButton extends React.PureComponent {
   render() {
     return (
-      <TouchableOpacity onPress={this._handlePress}>
+      <Touchable
+        background={Touchable.Ripple('#ccc', false)}
+        onPress={this._handlePress}>
         <View style={styles.getDirections}>
           <View style={styles.addressContainer}>
             <Text style={styles.venueName}>The Armory</Text>
@@ -116,7 +127,7 @@ class DirectionsButton extends React.PureComponent {
             <Text style={styles.directionsLabel}>Directions</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </Touchable>
     );
   }
 
@@ -127,7 +138,6 @@ class DirectionsButton extends React.PureComponent {
 
 const styles = StyleSheet.create({
   mapActions: {
-    paddingHorizontal: 12,
     backgroundColor: Colors.snow,
     borderTopWidth: 1,
     borderTopColor: '#C4C4C4',
@@ -151,6 +161,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 12,
+    paddingHorizontal: 12,
   },
   venueName: {
     fontFamily: 'Montserrat-SemiBold',
@@ -170,11 +181,11 @@ const styles = StyleSheet.create({
   },
   directionsIcon: {
     alignItems: 'center',
-    flex: 1,
   },
   directionsLabel: {
     fontFamily: 'Montserrat-Medium',
     fontSize: 11,
+    marginTop: 2,
     letterSpacing: 0,
     color: Colors.darkPurple,
   },
@@ -183,6 +194,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 16,
+    paddingHorizontal: 12,
   },
   getRideLabel: {
     fontFamily: 'Montserrat-Medium',
@@ -192,7 +204,7 @@ const styles = StyleSheet.create({
     color: Colors.darkPurple,
   },
   getRideIcon: {
-    marginHorizontal: 10,
+    marginRight: 15,
   },
   rideButton: {
     margin: 1.2 * Layout.smallMargin,

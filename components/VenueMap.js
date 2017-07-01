@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { MapView } from 'expo';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Images, Layout, Colors } from '../constants';
 
@@ -105,8 +105,8 @@ export default class VenueMap extends React.Component {
         onPress={this.props.onCloseMap}
         hitSlop={{ top: 30, left: 30, right: 30, bottom: 30 }}
         style={[styles.mapCloseButton, { left }]}>
-        <Icon
-          name="times-circle"
+        <Ionicons
+          name="md-close-circle"
           size={26}
           color={Colors.purple}
           style={[styles.mapCloseButton]}

@@ -25,7 +25,7 @@ export default class SocialMediaButton extends React.Component {
     const { network, username } = this.props;
 
     if (network === 'twitter') {
-      WebBrowser.openBrowserAsync(`https://twitter.com/@${username}`);
+      WebBrowser.openBrowserAsync(`https://twitter.com/${username}`);
     } else if (network === 'github') {
       WebBrowser.openBrowserAsync(`https://github.com/${username}`);
     }

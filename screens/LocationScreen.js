@@ -244,8 +244,13 @@ export default class LocationScreen extends React.Component {
       duration: 150,
     });
 
+    this._scrollView.getNode().scrollTo({
+      y: 0,
+      animated: true,
+    });
     this.setState({ mapIsFocused: false });
 
+    // For BackHandler to not propagate the event further
     return true;
   };
 }

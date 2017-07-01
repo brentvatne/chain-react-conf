@@ -8,6 +8,8 @@ import {
   LayoutAnimation,
 } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
+import FadeIn from 'react-native-fade-in-image';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Colors, Fonts, Images, Layout } from '../constants';
 import openExternalMapApp from '../utilities/openExternalMapApp';
@@ -28,6 +30,10 @@ export default class NearbySitesGallery extends React.PureComponent {
 
   // todo(brentvatne): improve perf of switching tabs here
   render() {
+    if (!this.state.shouldRenderTabs) {
+      return null;
+    }
+
     const { activeTab } = this.state;
 
     return (
@@ -77,18 +83,24 @@ export default class NearbySitesGallery extends React.PureComponent {
         key={name}
         style={styles.item}
         onPress={() => this._handlePress(address)}>
-        <Image
-          source={Images[image]}
-          resizeMode={'cover'}
-          style={styles.itemImage}
-        />
+        <FadeIn placeholderStyle={{ backgroundColor: '#eee' }}>
+          <Image
+            source={Images[image]}
+            resizeMode={'cover'}
+            style={[styles.itemImage, { height: 100 }]}
+          />
+        </FadeIn>
         <View style={styles.itemDetail}>
           <Text style={styles.itemTitle}>
             {name}
           </Text>
           <Text style={styles.itemAction}>
             Directions&nbsp;
-            <Image source={Images.purpleArrowIcon} />
+            <Ionicons
+              name="md-arrow-forward"
+              size={10}
+              style={{ color: Colors.darkPurple, marginBottom: -2 }}
+            />
           </Text>
         </View>
       </Touchable>
@@ -134,16 +146,17 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 35,
+    paddingTop: 20,
+    paddingBottom: 15,
   },
   item: {
     margin: 5,
-    borderWidth: 1,
-    borderColor: Colors.snow,
+    overflow: 'hidden',
+    borderRadius: 3,
     width: Layout.screenWidth / 2 - 10,
   },
   itemImage: {
-    width: Layout.screenWidth / 2 - 10 - 2,
+    width: Layout.screenWidth / 2 - 10 + 1,
   },
   itemDetail: {
     paddingHorizontal: 10,
