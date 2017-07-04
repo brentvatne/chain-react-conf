@@ -23,6 +23,9 @@
     "react-native-platform-touchable": "1.1.1",
     "react-native-tab-view": "^0.0.66",
     "react-navigation": "^1.0.0-beta.11",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.1",
+    "redux-persist": "^4.8.2",
     "sentry-expo": "1.2.0"
   },
   "devDependencies": {

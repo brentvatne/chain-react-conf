@@ -1,6 +1,7 @@
 import React from 'react';
-import { StatusBar, StyleSheet, Text, Util, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import { AppLoading, KeepAwake } from 'expo';
+import { Provider } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Sentry from 'sentry-expo';
 
@@ -9,6 +10,7 @@ import RootNavigation from './navigation/RootNavigation';
 import Colors from './constants/Colors';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 import NavigationEvents from './utilities/NavigationEvents';
+import Store from './state/Store';
 
 Sentry.config(
   'https://23d7bdfb2fa44757a31487fe1769487a@sentry.io/185875'
@@ -23,16 +25,19 @@ export default class AppContainer extends React.Component {
   };
 
   componentWillMount() {
-    this._loadAssetsAsync();
+    this._initializeAsync();
   }
 
-  async _loadAssetsAsync() {
+  async _initializeAsync() {
     try {
+      await Store.rehydrateAsync();
       await cacheAssetsAsync({
         images: Images.forLocalCache,
         fonts: [
           Ionicons.font,
-          { 'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf') },
+          {
+            'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+          },
           {
             'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
           },
@@ -57,16 +62,21 @@ export default class AppContainer extends React.Component {
   render() {
     if (this.state.appIsReady) {
       return (
-        <View style={styles.container}>
-          <RootNavigation
-            onNavigationStateChange={(prevState, currentState) => {
-              NavigationEvents.emit('change', { prevState, currentState });
-            }}
-          />
+        <Provider store={Store}>
+          <View style={styles.container}>
+            <RootNavigation
+              onNavigationStateChange={(prevState, currentState) => {
+                NavigationEvents.emit('change', { prevState, currentState });
+              }}
+            />
 
-          {__DEV__ && <KeepAwake />}
-          <StatusBar barStyle="light-content" backgroundColor={Colors.purple} />
-        </View>
+            {__DEV__ && <KeepAwake />}
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor={Colors.purple}
+            />
+          </View>
+        </Provider>
       );
     } else {
       return <AppLoading />;

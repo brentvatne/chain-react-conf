@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
+import RemindMeButton from './RemindMeButton';
 
 export default class TalkFooter extends React.PureComponent {
   render() {
@@ -33,13 +34,16 @@ export default class TalkFooter extends React.PureComponent {
   }
 
   _maybeRenderRemindMeButton = () => {
+    // Disable for now
     return null;
 
-    // return (
-    //   <View style={styles.remindMe}>
-    //     <RemindMeButton onPress={this._toggleReminderMe} on={remindMe} />
-    //   </View>
-    // );
+    let { details } = this.props;
+
+    return (
+      <View style={styles.remindMe}>
+        <RemindMeButton time={details.eventStart} title={details.title} />
+      </View>
+    );
   };
 }
 
