@@ -2,7 +2,7 @@ import { Constants, Permissions, Notifications } from 'expo';
 import { format } from 'date-fns';
 import Store from '../state/Store';
 
-const DEBUG_REMINDERS = true;
+const DEBUG_REMINDERS = false;
 const TIME_BEFORE_REMINDER = 10 * 60 * 1000;
 
 async function _maybeRequestPermissionsAsync() {

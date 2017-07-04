@@ -1,9 +1,16 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { find } from 'lodash';
 
-import { Colors, Fonts, Images } from '../constants';
+import { Colors, Fonts } from '../constants';
 import Reminders from '../utilities/Reminders';
 
 @connect((data, props) => RemindMeButton.getDataProps(data, props))
@@ -21,22 +28,48 @@ export default class RemindMeButton extends React.Component {
 
   render() {
     const { notificationId } = this.props;
-    const icon = notificationId
-      ? Images.activeNotificationIcon
-      : Images.inactiveNotificationIcon;
     const label = notificationId ? 'Turn off' : 'Remind me';
 
     return (
       <TouchableOpacity
+        activeOpacity={0.7}
         style={[styles.button, notificationId && styles.activeButton]}
         onPress={this._toggleRemindMeAsync}>
         <View style={styles.buttonContainer}>
-          <Image source={icon} style={styles.icon} />
+          {this._renderIcon()}
           <Text style={[styles.text, notificationId && styles.activeText]}>
             {label}
           </Text>
         </View>
       </TouchableOpacity>
+    );
+  }
+
+  _renderIcon() {
+    const { notificationId } = this.props;
+    let iconName;
+    let iconColor;
+
+    if (notificationId) {
+      iconColor = Colors.snow;
+      iconName =
+        Platform.OS === 'ios'
+          ? 'ios-notifications-off'
+          : 'md-notifications-off';
+    } else {
+      iconColor = Colors.red;
+      iconName =
+        Platform.OS === 'ios'
+          ? 'ios-notifications-outline'
+          : 'md-notifications-outline';
+    }
+
+    return (
+      <Ionicons
+        name={iconName}
+        size={15}
+        style={[{ color: iconColor }, styles.icon]}
+      />
     );
   }
 
@@ -57,7 +90,7 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderColor: Colors.red,
-    borderRadius: 100,
+    borderRadius: 34 / 2,
     backgroundColor: Colors.clear,
     alignItems: 'center',
     justifyContent: 'center',

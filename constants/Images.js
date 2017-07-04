@@ -1,7 +1,6 @@
 const Images = {
   activeInfoIcon: require('../assets/images/Icons/icon-more-active.png'),
   activeLocationIcon: require('../assets/images/Icons/icon-venue-active.png'),
-  activeNotificationIcon: require('../assets/images/Icons/icon-notification-active.png'),
   activeScheduleIcon: require('../assets/images/Icons/icon-schedule-active.png'),
   amazon: require('../assets/images/sponsors/img-sponsor-amazon-web-services.png'),
   api: require('../assets/images/Icons/icon-api-testing.png'),
@@ -46,7 +45,6 @@ const Images = {
   igniteClear: require('../assets/images/ignite-logo-transparent.png'),
   inactiveInfoIcon: require('../assets/images/Icons/icon-more.png'),
   inactiveLocationIcon: require('../assets/images/Icons/icon-venue.png'),
-  inactiveNotificationIcon: require('../assets/images/Icons/icon-notification-inactive.png'),
   inactiveScheduleIcon: require('../assets/images/Icons/icon-schedule.png'),
   instrument: require('../assets/images/sponsors/img-sponsor-instrument.png'),
   japanesegarden: require('../assets/images/img-japanesegarden.jpg'),
@@ -118,11 +116,9 @@ const Images = {
 Images.forLocalCache = [
   Images.activeInfoIcon,
   Images.activeLocationIcon,
-  Images.activeNotificationIcon,
   Images.activeScheduleIcon,
   Images.inactiveInfoIcon,
   Images.inactiveLocationIcon,
-  Images.inactiveNotificationIcon,
   Images.inactiveScheduleIcon,
   Images.breakfastBreak,
   Images.arrowIcon,

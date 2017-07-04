@@ -38,7 +38,6 @@ export default class AppContainer extends React.Component {
 
   _listenForNotifications = () => {
     Notifications.addListener(notification => {
-      console.log({ notification });
       if (notification.origin === 'received' && Platform.OS === 'ios') {
         Alert.alert(
           'A friendly reminder',
