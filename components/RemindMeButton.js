@@ -33,6 +33,7 @@ export default class RemindMeButton extends React.Component {
     return (
       <TouchableOpacity
         activeOpacity={0.7}
+        hitSlop={{ top: 30, left: 30, right: 30, bottom: 30 }}
         style={[styles.button, notificationId && styles.activeButton]}
         onPress={this._toggleRemindMeAsync}>
         <View style={styles.buttonContainer}>
