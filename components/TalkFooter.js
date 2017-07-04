@@ -34,9 +34,6 @@ export default class TalkFooter extends React.PureComponent {
   }
 
   _maybeRenderRemindMeButton = () => {
-    // Disable for now
-    return null;
-
     let { details } = this.props;
 
     return (

@@ -1,6 +1,13 @@
 import React from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
-import { AppLoading, KeepAwake } from 'expo';
+import {
+  Alert,
+  StatusBar,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { AppLoading, KeepAwake, Notifications } from 'expo';
 import { Provider } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Sentry from 'sentry-expo';
@@ -26,32 +33,47 @@ export default class AppContainer extends React.Component {
 
   componentWillMount() {
     this._initializeAsync();
+    this._listenForNotifications();
   }
+
+  _listenForNotifications = () => {
+    Notifications.addListener(notification => {
+      console.log({ notification });
+      if (notification.origin === 'received' && Platform.OS === 'ios') {
+        Alert.alert(
+          'A friendly reminder',
+          `"${notification.data.title}" is starting soon!`
+        );
+      }
+    });
+  };
 
   async _initializeAsync() {
     try {
-      await Store.rehydrateAsync();
-      await cacheAssetsAsync({
-        images: Images.forLocalCache,
-        fonts: [
-          Ionicons.font,
-          {
-            'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
-          },
-          {
-            'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
-          },
-          {
-            'Montserrat-Medium': require('./assets/fonts/Montserrat-Medium.ttf'),
-          },
-          {
-            'Montserrat-Light': require('./assets/fonts/Montserrat-Light.ttf'),
-          },
-          {
-            'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
-          },
-        ],
-      });
+      await Promise.all([
+        Store.rehydrateAsync(),
+        cacheAssetsAsync({
+          images: Images.forLocalCache,
+          fonts: [
+            Ionicons.font,
+            {
+              'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+            },
+            {
+              'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+            },
+            {
+              'Montserrat-Medium': require('./assets/fonts/Montserrat-Medium.ttf'),
+            },
+            {
+              'Montserrat-Light': require('./assets/fonts/Montserrat-Light.ttf'),
+            },
+            {
+              'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+            },
+          ],
+        }),
+      ]);
     } catch (e) {
       Sentry.captureException(e);
     } finally {

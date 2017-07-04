@@ -16,6 +16,7 @@
     "expo": "18.0.6",
     "fbemitter": "^2.1.1",
     "image-size": "0.6.0",
+    "lodash": "^4.17.4",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-18.0.2.tar.gz",
     "react-native-app-link": "^0.4.0",
