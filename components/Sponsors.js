@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Linking,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { WebBrowser } from 'expo';
 import { Colors, Fonts, Images, Layout } from '../constants';
 
 const Sponsor = props => {
@@ -15,7 +15,7 @@ const Sponsor = props => {
   return (
     <TouchableOpacity
       style={styles.sponsor}
-      onPress={() => Linking.openURL(props.url)}>
+      onPress={() => WebBrowser.openBrowserAsync(props.url)}>
       <Image style={imageStyle} source={props.image} />
     </TouchableOpacity>
   );

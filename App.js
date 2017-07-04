@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, Util, View } from 'react-native';
 import { AppLoading, KeepAwake } from 'expo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Sentry from 'sentry-expo';
@@ -48,7 +48,7 @@ export default class AppContainer extends React.Component {
         ],
       });
     } catch (e) {
-      console.log(e.message);
+      Sentry.captureException(e);
     } finally {
       this.setState({ appIsReady: true });
     }
@@ -64,7 +64,7 @@ export default class AppContainer extends React.Component {
             }}
           />
 
-          <KeepAwake />
+          {__DEV__ && <KeepAwake />}
           <StatusBar barStyle="light-content" backgroundColor={Colors.purple} />
         </View>
       );
