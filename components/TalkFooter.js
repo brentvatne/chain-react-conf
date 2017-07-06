@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { format } from 'date-fns';
 
-import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
+import { Colors, Layout } from '../constants';
 import RemindMeButton from './RemindMeButton';
 
 export default class TalkFooter extends React.PureComponent {

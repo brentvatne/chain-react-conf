@@ -10,11 +10,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { find } from 'lodash';
 
-import { Colors, Fonts } from '../constants';
+import { Colors, Fonts, Layout } from '../constants';
 import Reminders from '../utilities/Reminders';
 
 @connect((data, props) => RemindMeButton.getDataProps(data, props))
-export default class RemindMeButton extends React.Component {
+export default class RemindMeButton extends React.PureComponent {
   static getDataProps(data, props) {
     let reminder = find(
       data.reminders,
@@ -95,7 +95,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.clear,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 34,
+    height: Layout.isSmallDevice ? 30 : 34,
+    marginLeft: Layout.isSmallDevice ? 20 : 0,
+    marginRight: Layout.isSmallDevice ? -5 : 0,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: Fonts.type.medium,
-    fontSize: 11,
+    fontSize: Layout.isSmallDevice ? 9 : 11,
     color: Colors.red,
   },
   activeText: {
