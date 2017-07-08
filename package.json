@@ -4,6 +4,10 @@
   "description": "A fork of the Chain React Conference App, for fun!",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
     "test": "jest",
     "lint": "eslint .",
     "prettier": "eslint . --fix"
@@ -15,6 +19,7 @@
     "date-fns": "^2.0.0-alpha.1",
     "expo": "18.0.6",
     "fbemitter": "^2.1.1",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-18.0.2.tar.gz",
@@ -31,6 +36,7 @@
   "devDependencies": {
     "eslint": "^4.1.1",
     "eslint-config-react-native-prettier": "1.0.0",
-    "jest-expo": "~18.0.0"
+    "jest-expo": "~18.0.0",
+    "react-native-scripts": "^0.0.40"
   }
 }
